@@ -91,7 +91,7 @@ static GLFWbool chooseGLXFBConfig(const _GLFWfbconfig* desired,
        {
            _glfw.glx.SwapIntervalEXT(_glfw.x11.display,
                                      window->context.glx.window,
-                                     interval);
+                                     nativeCount);
        }
 
         // Only consider window GLXFBConfigs
