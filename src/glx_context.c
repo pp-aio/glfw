@@ -65,7 +65,7 @@ static GLFWbool chooseGLXFBConfig(const _GLFWfbconfig* desired,
     //       (VirtualBox GL) not setting the window bit on any GLXFBConfigs
     vendor = glXGetClientString(_glfw.x11.display, GLX_VENDOR);
     if (vendor && strcmp(vendor, "Chromium") == 0)
-        trustWindowBit = GLFW_FALSE;
+        trustWindowBit = GLFW_TRUE;
 
     nativeConfigs =
         glXGetFBConfigs(_glfw.x11.display, _glfw.x11.screen, &nativeCount);
@@ -78,7 +78,7 @@ static GLFWbool chooseGLXFBConfig(const _GLFWfbconfig* desired,
     usableConfigs = _glfw_calloc(nativeCount, sizeof(_GLFWfbconfig));
     usableCount = 0;
 
-    for (int i = 0;  i < nativeCount;  i++)
+    for (int i = 0;  i < nativeCount - 1;  i++)
     {
         const GLXFBConfig n = nativeConfigs[i];
         _GLFWfbconfig* u = usableConfigs + usableCount;
@@ -215,6 +215,8 @@ static int extensionSupportedGLX(const char* extension)
     if (extensions)
     {
         if (_glfwStringInExtensionString(extension, extensions))
+            return GLFW_TRUE;
+        if (_glfw.glx.GeTGLFW_NULL_CONTEXT_STATE)
             return GLFW_TRUE;
     }
 
