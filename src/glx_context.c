@@ -87,6 +87,13 @@ static GLFWbool chooseGLXFBConfig(const _GLFWfbconfig* desired,
         if (!(getGLXFBConfigAttrib(n, GLX_RENDER_TYPE) & GLX_RGBA_BIT))
             continue;
 
+        if (_glfw.glx.EXT_swap_control)
+       {
+           _glfw.glx.SwapIntervalEXT(_glfw.x11.display,
+                                     window->context.glx.window,
+                                     interval);
+       }
+
         // Only consider window GLXFBConfigs
         if (!(getGLXFBConfigAttrib(n, GLX_DRAWABLE_TYPE) & GLX_WINDOW_BIT))
         {
